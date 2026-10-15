@@ -1,0 +1,29 @@
+device: cuda
+data:
+  utkface_root: ../../datasets/utkface/extracted
+  task: gender
+  protocol: 1
+  eb_ratio: 0.1
+  max_images: 1500
+model:
+  image_size: 112
+  emb_dim: 64
+detox:
+  lambda1: 0.1
+  lambda2: 0.1
+  lambda3: 0.1
+train:
+  protocol: smoke
+  methods: [softmax, detox]
+  epochs: 1
+  batch_size: 32
+  lr: 0.05
+  num_workers: 2
+  seed: 42
+eval:
+  batch_size: 32
+  max_images: 400
+paths:
+  checkpoint_dir: outputs/checkpoints/smoke
+  log_dir: outputs/logs/smoke
+  figure_dir: outputs/figures/smoke
