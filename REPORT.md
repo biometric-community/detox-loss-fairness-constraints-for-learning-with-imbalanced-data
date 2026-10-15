@@ -16,8 +16,8 @@ Lab twin: gender classification on UTKFace Protocol-1 (E-B ratio=0.1); Softmax v
 
 | Method | BAcc | E-A BAcc | E-B BAcc | |BAcc gap| |
 |--------|------|----------|----------|-----------|
-| softmax | 82.54% | 87.06% | 78.11% | 8.95% |
-| detox | 50.00% | 50.00% | 50.00% | 0.00% |
+| softmax | 87.94% | 90.10% | 85.82% | 4.28% |
+| detox | 72.82% | 78.65% | 67.23% | 11.42% |
 
 ![Fairness](outputs/figures/full/fairness_metrics.svg)
 

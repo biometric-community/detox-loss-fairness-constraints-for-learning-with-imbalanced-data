@@ -6,3 +6,4 @@
 | D2 | Tasks | Gender + age-group + PPB | Gender Protocol-1 (E-B 10%) | Focused lab twin |
 | D3 | Clustering | Full-set / offline clusters | Mini-batch k-means | Online training |
 | D4 | F-Distill layers | Multi-layer feature maps | Penultimate emb MSE vs ImageNet-init teacher | Simplified |
+| D5 | Fairness vs Softmax | Detox reduces ethnicity gap while keeping high BAcc | Softmax stronger here; Detox gap not reduced | Mini-batch k-means + λ schedule imperfect vs paper |

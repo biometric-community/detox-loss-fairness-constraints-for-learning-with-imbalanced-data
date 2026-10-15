@@ -9,15 +9,15 @@ model:
   image_size: 112
   emb_dim: 128
 detox:
-  lambda1: 0.1
-  lambda2: 0.1
-  lambda3: 0.1
+  lambda1: 0.01
+  lambda2: 0.01
+  lambda3: 0.05
 train:
   protocol: full
   methods: [softmax, detox]
-  epochs: 8
+  epochs: 10
   batch_size: 64
-  lr: 0.05
+  lr: 0.01
   num_workers: 4
   seed: 42
 eval:

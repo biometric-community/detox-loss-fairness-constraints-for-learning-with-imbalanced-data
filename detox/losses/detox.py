@@ -68,9 +68,12 @@ def exclusion_loss(emb: torch.Tensor, labels: torch.Tensor, n_classes: int) -> t
 
 
 def inclusion_loss(emb: torch.Tensor) -> torch.Tensor:
-    """Minimize feature variance toward batch mean (Eq. 4)."""
+    """Minimize feature variance toward batch mean (Eq. 4).
+
+    Normalize by embedding dim so the scale stays comparable to CE.
+    """
     mu = emb.mean(dim=0, keepdim=True)
-    return ((emb - mu) ** 2).sum(dim=1).mean()
+    return ((emb - mu) ** 2).mean()
 
 
 def feature_distill_loss(student_emb: torch.Tensor, teacher_emb: torch.Tensor) -> torch.Tensor:
