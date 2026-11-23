@@ -66,6 +66,26 @@ def test_training_runs_one_epoch_for_both_methods_on_a_small_folder(tmp_path, un
     assert all(torch.isfinite(torch.tensor(m["history"][0]["loss"])) for m in summary["methods"])
 
 
+def test_training_refuses_a_training_set_smaller_than_one_batch(tmp_path, untrained_resnet, make_utk):
+    root = tmp_path / "utk"
+    make_utk(root, {3: 4, 0: 4})  # the training split holds at most 6 of these 8 images
+    cfg = {
+        "device": "cpu",
+        "data": {"utkface_root": str(root), "task": "gender", "protocol": 1, "eb_ratio": 0.1, "max_images": None},
+        "model": {"image_size": 16, "emb_dim": 8},
+        "detox": {"lambda1": 0.1, "lambda2": 0.1, "lambda3": 0.0},
+        "train": {"methods": ["softmax"], "epochs": 1, "batch_size": 16, "lr": 0.01, "num_workers": 0, "seed": 0},
+        "paths": {
+            "checkpoint_dir": str(tmp_path / "ckpt"),
+            "log_dir": str(tmp_path / "logs"),
+            "figure_dir": str(tmp_path / "figs"),
+        },
+    }
+    with pytest.raises(ValueError, match="fewer than one batch"):
+        train(cfg, device_override="cpu")
+    assert not (tmp_path / "ckpt").exists()
+
+
 def test_smoke_and_default_configs_share_the_task_protocol_and_input_size(default_cfg, smoke_cfg):
     assert default_cfg["data"]["task"] == smoke_cfg["data"]["task"] == "gender"
     assert default_cfg["data"]["protocol"] == smoke_cfg["data"]["protocol"] == 1

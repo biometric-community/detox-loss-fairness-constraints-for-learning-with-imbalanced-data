@@ -52,6 +52,11 @@ def _train_one(
         pin_memory=device.type == "cuda",
         drop_last=True,
     )
+    if len(loader) == 0:
+        raise ValueError(
+            f"The training set has {len(train_ds)} images, fewer than one batch of {loader.batch_size}; "
+            "with drop_last=True no training step would run. Use a larger set or a smaller batch_size."
+        )
     student = FaceClassifier(train_ds.num_classes, emb_dim=emb_dim, pretrained=True).to(device)
     teacher = None
     if method == "detox" and float(cfg["detox"].get("lambda3", 0.0)) > 0:
